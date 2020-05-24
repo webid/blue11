@@ -25,9 +25,6 @@
     "eject": "react-scripts eject",
     "scrape": "node --max-old-space-size=8192 scraper.js"
   },
-  "resolutions": {
-    "sshpk": "1.16.1"
-  },
   "browserslist": {
     "production": [
       ">0.2%",
