@@ -32,7 +32,6 @@ let getData = url => {
 	console.log(`url ${url}`)
 	requestPromise(url)
 		.then(html => {
-			// console.dir(html)
 			// Scrape data
 			let $ = cheerio.load(html)
 			
@@ -66,7 +65,7 @@ let getData = url => {
 
 					player.positions = positions
 					player.photoFolderIndex = rows.indexOf(row) % 5
-					console.dir(player)
+					// console.dir(player)
 					dataList.push(player)
 				}
 			}
@@ -78,7 +77,7 @@ let getData = url => {
 				saveImages()
 			} else {
 				// Load next page
-				console.log(`loading page ${i}`)
+				// console.log(`loading page ${i}`)
 				i++
 				getData(`${urlToScrape}${i}/`)
 			}

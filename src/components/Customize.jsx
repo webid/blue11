@@ -93,7 +93,7 @@ export default class Customize extends React.Component {
         className="CTA"
         download="11builder"
         href={this.props.downloadLink}
-      >Donwload lineup as a PNG</a>
+      >Download lineup as a PNG</a>
     }
     return(
       <div className="Customize">

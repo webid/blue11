@@ -10,7 +10,7 @@ export default class Pitch extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: "",
+      // value: "",
       occupiedPositions: []
     }
   }

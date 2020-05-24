@@ -15,7 +15,7 @@
     "cheerio": "^1.0.0-rc.2",
     "file-system": "^2.2.2",
     "image-downloader": "^3.3.0",
-    "request-promise": "^4.2.2",
+    "request-promise": "^4.2.5",
     "simple-rate-limiter": "^0.2.3"
   },
   "scripts": {
@@ -24,6 +24,9 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "scrape": "node --max-old-space-size=8192 scraper.js"
+  },
+  "resolutions": {
+    "sshpk": "1.16.1"
   },
   "browserslist": {
     "production": [
