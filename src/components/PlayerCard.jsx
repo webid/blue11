@@ -81,7 +81,7 @@ export default class PlayerCard extends React.Component {
     // Start drag
     ReactDOM.findDOMNode(this).addEventListener("mousedown", e => {
       this.dragStart(e.clientX, e.clientY)
-    })
+    }, {passive: true})
     ReactDOM.findDOMNode(this).addEventListener("touchstart", e => {
       this.dragStart(e.touches[0].clientX, e.touches[0].clientY)
       // Save position to prepare touchend
@@ -90,7 +90,7 @@ export default class PlayerCard extends React.Component {
       })
       // Add hover style
       ReactDOM.findDOMNode(this).classList.add("Selected")
-    })
+    }, {passive: true})
     // Calculate drag distance
     ReactDOM.findDOMNode(this).addEventListener("mousemove", e => {
       // Only drag if mouse is being pressed
@@ -112,7 +112,7 @@ export default class PlayerCard extends React.Component {
           lastTouch: { x: e.touches[0].clientX, y: e.touches[0].clientY }
         })
       }
-    })
+    }, {passive: true})
     // End drag
     ReactDOM.findDOMNode(this).addEventListener("mouseup", e => {
       if (this.state.isDragging) {

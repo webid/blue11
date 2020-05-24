@@ -17,7 +17,6 @@ export default class Search extends React.Component {
     if (searchValue.length > 0) {
       // Find matching players from JSON players index
       const playerFilesPaths = []
-      console.log('currently selected players:', this.props.selectedPlayers)
 
       for (const player in this.props.playersIndex) {
         const playerName = player.toLocaleLowerCase()
@@ -43,7 +42,7 @@ export default class Search extends React.Component {
       // Sort results by players ranking
       searchResults.sort((a, b) => { return b.rating - a.rating })
     }
-    console.log("Search Results: ", searchResults)
+    // console.log("Search Results: ", searchResults)
     this.props.setResults(searchResults)
   }
 
