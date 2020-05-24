@@ -1,1 +1,1 @@
-{"id":"232862","name":"Shoya Nakajima","rating":"75","photo":"./data/images/photos/4/232862.png","club":{"name":"Portimão","logo":"./data/images/clubs/Portimao.png"},"positions":["AG","BU"],"photoFolderIndex":4}
+{"id":232862,"name":"Shoya Nakajima","rating":{"initial":"77","potential":"80"},"photo":"./data/images/photos/0/232862.png","club":{"name":"FC Porto","logo":"./data/images/clubs/FCPorto.png"},"positions":["MG","AG"],"photoFolderIndex":0}

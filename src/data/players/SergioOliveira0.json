@@ -1,1 +1,1 @@
-{"id":"198031","name":"Sérgio Oliveira","rating":"76","photo":"./data/images/photos/0/198031.png","club":{"name":"FC Porto","logo":"./data/images/clubs/FCPorto.png"},"positions":["MC","MDC"],"photoFolderIndex":0}
+{"id":198031,"name":"Sérgio Oliveira","rating":{"initial":"79","potential":"80"},"photo":"./data/images/photos/3/198031.png","club":{"name":"FC Porto","logo":"./data/images/clubs/FCPorto.png"},"positions":["MC"],"photoFolderIndex":3}

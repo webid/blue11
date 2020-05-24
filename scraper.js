@@ -18,34 +18,57 @@ let unavailableCount = 0
 let downloadsAreDone = false
 let alreadySavedData = false
 let jsonIndex = {}
-const urlToScrape = "https://www.fifaindex.com/fr/players/"
+
 const urlRoot = "https://www.fifaindex.com"
+// scrape all players
+// const urlToScrape = "https://www.fifaindex.com/fr/players/"
+
+// only FC Porto
+const urlToScrape= "https://www.fifaindex.com/fr/players/?team=236"
+totalPages = 1
 
 let getData = url => {
 	console.log(`scraping pages : ${Math.trunc(i*100/totalPages)}%`)
+	console.log(`url ${url}`)
 	requestPromise(url)
 		.then(html => {
+			// console.dir(html)
 			// Scrape data
 			let $ = cheerio.load(html)
-			const rows = $(".table.table-striped.players tbody tr:not(.table-ad, .hidden)").toArray()
+			
+			const rows = $(".table.table-striped.table-players tbody tr:not(.table-ad, .hidden)").toArray()
+			
+			// test with 3 rows
+			// const allrows = $(".table.table-striped.table-players tbody tr:not(.table-ad, .hidden)").toArray()
+			// const rows = allrows.slice(0, 3);
+			
 			for (const row of rows) {
 				// Setup player JSON structure
 				const player = {}
-				player.id = $(row).attr('data-playerid')
-				player.name = $(row).find("td[data-title='Nom'] a").text()
-				player.rating = $(row).find('span.label.rating').first().text()
-				player.photo = urlRoot + $(row).find('img.player.small').attr('src')
-				player.club = {
-					name: $(row).find("td[data-title='Équipe'] a").attr('title'),
-					logo: urlRoot + $(row).find('img.team.small').attr('src')
+				player.id = $(row).data('playerid')
+				if(player.id !== undefined) {
+					player.name = $(row).data('title', 'Name').find('a').attr('title').replace(' FIFA 20','')
+					player.rating = {
+						initial: $(row).data('title', 'OVR / POT').find('span').first().text(),
+						potential: $(row).data('title', 'OVR / POT').find('span').eq(1).text()
+					}
+
+					player.photo = urlRoot + $(row).find('img.player.size-5').data('src')
+					player.club = {
+						name: $(row).data('title', 'Equipe').find("a.link-team").attr('title').replace(' FIFA 20',''),
+						logo: urlRoot + $(row).find('img.team.size-3').data('src')
+					}
+
+					const positions = []
+					for (const position of Array.from($(row).data('title', 'Preferred Positions').find('a.link-position'))) {
+						positions.push($(position).text())
+					}
+
+					player.positions = positions
+					player.photoFolderIndex = rows.indexOf(row) % 5
+					console.dir(player)
+					dataList.push(player)
 				}
-				const positions = []
-				for (const position of Array.from($(row).find('span.label.position'))) {
-					positions.push($(position).text())
-				}
-				player.positions = positions
-				player.photoFolderIndex = rows.indexOf(row) % 5
-				dataList.push(player)
 			}
 		})
 		.then(() => {
@@ -55,6 +78,7 @@ let getData = url => {
 				saveImages()
 			} else {
 				// Load next page
+				console.log(`loading page ${i}`)
 				i++
 				getData(`${urlToScrape}${i}/`)
 			}
@@ -205,17 +229,17 @@ let downloadPictures = playerObject => {
 downloadPictures = limit(downloadPictures).to(1).per(600)
 
 let saveImages = () => {
-  fs.mkdir('public/data/images/clubs')
-  fs.mkdir('public/data/images/photos/0')
-  fs.mkdir('public/data/images/photos/1')
-  fs.mkdir('public/data/images/photos/2')
-  fs.mkdir('public/data/images/photos/3')
-  fs.mkdir('public/data/images/photos/4')
+	fs.mkdir('public/data/images/clubs')
+	fs.mkdir('public/data/images/photos/0')
+	fs.mkdir('public/data/images/photos/1')
+	fs.mkdir('public/data/images/photos/2')
+	fs.mkdir('public/data/images/photos/3')
+	fs.mkdir('public/data/images/photos/4')
 	console.log(`datalist length: ${dataList.length}`)
-  for (const playerObject of dataList) {
-		// Download player photo
-		downloadPictures(playerObject)
-  }
+	for (const playerObject of dataList) {
+			// Download player photo
+			downloadPictures(playerObject)
+	}
 }
 
 const savePlayersData = () => {
@@ -245,11 +269,16 @@ const savePlayersData = () => {
 		// Create JSON file
 		let formattedName = dataList[j].name.replace(/\s/g, "").normalize('NFD').replace(/[\u0300-\u036f]/g, "")
 		let uniqueIndex = 0
-		while (fs.exists(`src/data/players/${formattedName}${uniqueIndex.toString()}.json`)) {
+		// while (fs.exists(`src/data/players/${formattedName}${uniqueIndex.toString()}.json`)) {
+		// 	uniqueIndex++
+		// }
+		while (fs.exists(`src/data/players/${formattedName}${uniqueIndex.toString()}.json`, exists => {}) ) {
 			uniqueIndex++
 		}
+
 		formattedName = `${formattedName}${uniqueIndex.toString()}`
 		if (formattedName !== 'undefined') {
+			// console.log(`${formattedName}.json`, JSON.stringify(dataList[j]))
 			fs.writeFileSync(`src/data/players/${formattedName}.json`, JSON.stringify(dataList[j]))
 			jsonIndex[formattedName] = `./data/players/${formattedName}.json`
 		}
@@ -262,4 +291,4 @@ const savePlayersData = () => {
 }
 
 // Start scraping
-getData(`${urlToScrape}${i}/`)
+getData(`${urlToScrape}`)

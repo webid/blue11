@@ -131,6 +131,7 @@ export default class App extends React.Component {
 
   getPlayerFile = playerFilePath => {
     //const file = require(`${playerFilePath}`)
+    // console.log(`Player File Path: ${playerFilePath}`)
     return require(`${playerFilePath}`)
   }
 
@@ -141,10 +142,12 @@ export default class App extends React.Component {
     }
     let newSelection = this.state.selectedPlayers
     newSelection.push(playerObject)
+    console.log("PO", playerObject)
     this.setState({ selectedPlayers: newSelection })
     // Remove selected player from index so it can't be added twice
-    const formattedName = playerObject.name.replace(/\s/g, "").normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+    const formattedName = playerObject.name.replace(/\s/g, "").normalize('NFD').replace(/[\u0300-\u036f]/g, "") + '0'
     this.addToBackups(formattedName)
+    console.log("player being removed from index:", formattedName)
     this.removeFromIndex(formattedName)
     // Hide selected player from results
     let newResults = this.state.results
@@ -175,8 +178,9 @@ export default class App extends React.Component {
       downloadStatus: "disabled"
     })
     // Put player back in index
-    const formattedName = playerObject.name.replace(/\s/g, "").normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+    const formattedName = playerObject.name.replace(/\s/g, "").normalize('NFD').replace(/[\u0300-\u036f]/g, "") + '0'
     this.addToIndex(formattedName)
+    console.log("player being indexed:", formattedName)
     this.removeFromBackups(formattedName)
   }
 

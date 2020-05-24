@@ -17,6 +17,8 @@ export default class Search extends React.Component {
     if (searchValue.length > 0) {
       // Find matching players from JSON players index
       const playerFilesPaths = []
+      console.log('currently selected players:', this.props.selectedPlayers)
+
       for (const player in this.props.playersIndex) {
         const playerName = player.toLocaleLowerCase()
         // Store the 5 best matches
@@ -41,6 +43,7 @@ export default class Search extends React.Component {
       // Sort results by players ranking
       searchResults.sort((a, b) => { return b.rating - a.rating })
     }
+    console.log("Search Results: ", searchResults)
     this.props.setResults(searchResults)
   }
 
@@ -65,17 +68,17 @@ export default class Search extends React.Component {
   }
 
   render() {
-    let customPlayer = {
-      club: {
-        logo: "./data/images/placeholders/logo.svg",
-        name: "Unknown FC"
-      },
-      id: this.state.value,
-      name: this.state.value,
-      positions: ["MC"],
-      rating: "0",
-      shortName: this.state.value
-    }
+    // let customPlayer = {
+    //   club: {
+    //     logo: "./data/images/placeholders/logo.svg",
+    //     name: "Unknown FC"
+    //   },
+    //   id: this.state.value,
+    //   name: this.state.value,
+    //   positions: ["MC"],
+    //   rating: "0",
+    //   shortName: this.state.value
+    // }
     return (
       <div>
         <input
@@ -109,7 +112,7 @@ export default class Search extends React.Component {
               portraitPlaceholder={this.props.portraitPlaceholder}
             />
           ))}
-          {this.props.selectedPlayers.length < 11 &&
+          {/* this.props.selectedPlayers.length < 11 &&
           this.state.value !== "" &&
             // Add custom player
             <SearchResult
@@ -121,7 +124,7 @@ export default class Search extends React.Component {
               logoPlaceholder={this.props.logoPlaceholder}
               portraitPlaceholder={this.props.portraitPlaceholder}
             />
-          }
+          */}
           {this.state.isLoading &&
             // Display loading messages while waiting for results
             <div className="Result-player">

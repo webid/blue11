@@ -1,1 +1,1 @@
-{"id":"203757","name":"Zé Luís","rating":"79","photo":"./data/images/photos/4/203757.png","club":{"name":"Spartak Moscou","logo":"./data/images/clubs/SpartakMoscou.png"},"positions":["BU"],"photoFolderIndex":4}
+{"id":203757,"name":"Zé Luís","rating":{"initial":"80","potential":"80"},"photo":"./data/images/photos/1/203757.png","club":{"name":"FC Porto","logo":"./data/images/clubs/FCPorto.png"},"positions":["BU"],"photoFolderIndex":1}
